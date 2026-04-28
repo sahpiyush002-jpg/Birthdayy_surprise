@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>A Gift For RANI 💝</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;font-family:'Poppins',sans-serif;background:#c0392b;overflow:hidden;}
+
+/* PAGE SYSTEM */
+.page{display:none;width:100vw;height:100vh;flex-direction:column;align-items:center;justify-content:center;position:fixed;top:0;left:0;overflow:hidden;}
+.page.active{display:flex;animation:pgIn .55s cubic-bezier(.22,1,.36,1) both;}
+@keyframes pgIn{from{opacity:0;transform:scale(.96) translateY(14px);}to{opacity:1;transform:none;}}
+
+.red-bg{background:radial-gradient(ellipse at 50% 40%,#e8453c 0%,#c0392b 55%,#8e1a12 100%);}
+.petal{position:fixed;pointer-events:none;z-index:0;opacity:0;animation:petalFall linear infinite;}
+@keyframes petalFall{0%{opacity:0;transform:translateY(-20px) rotate(0deg);}10%{opacity:.5;}100%{opacity:0;transform:translateY(105vh) rotate(360deg);}}
+
+/* PHOTO FIX (Anti-Stretch) */
+img { width: 100%; object-fit: cover; display: block; }
+
+.polaroid-lock{position:relative;background:white;padding:8px 8px 38px;box-shadow:8px 14px 52px rgba(0,0,0,.55);transform:rotate(-4deg);width:min(200px,55vw);}
+.lock-img{height:min(220px,50vw);}
+
+.pbox{width:44px;height:44px;border:2px solid rgba(255,255,255,.55);border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;}
+.pbox.filled::after{content:'';width:15px;height:15px;background:#c0392b;border-radius:50%;}
+.kkey{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.45);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+/* CAMERA SCENE */
+.cam-scene{position:relative;width:min(320px,80vw);height:min(300px,70vw);}
+.polaroid-out{position:absolute;left:50%;transform:translateX(-50%);bottom:36%;width:38%;background:white;padding:5px 5px 24px;box-shadow:3px 8px 28px rgba(0,0,0,.5);z-index:20;clip-path:inset(92% 0 0 0);}
+.polaroid-out img{aspect-ratio:1/1;}
+.polaroid-out.shoot{animation:ejectDown 2.2s cubic-bezier(.22,1,.36,1) forwards;}
+@keyframes ejectDown{0%{clip-path:inset(92% 0 0 0);bottom:36%;}100%{clip-path:inset(0% 0 0 0);bottom:52%;left:4%;transform:translateX(0%) rotate(-10deg);}}
+
+.flash-overlay{position:fixed;inset:0;background:white;opacity:0;pointer-events:none;z-index:999;}
+.flash-overlay.flash{animation:doFlash .35s ease forwards;}
+@keyframes doFlash{0%{opacity:0;}18%{opacity:.9;}100%{opacity:0;}}
+
+/* LETTER & GALLERY */
+.letter-box{background:#fefcfa;padding:30px;border-radius:2px;box-shadow:0 15px 40px rgba(90,30,20,0.15);width:90%;max-width:500px;text-align:center;}
+.gallery-wrap{display:flex;gap:15px;overflow-x:auto;width:100%;padding:20px;}
+.gallery-img-card{background:white;padding:8px 8px 30px;box-shadow:0 5px 15px rgba(0,0,0,0.3);flex-shrink:0;width:180px;transform:rotate(var(--r));}
+
+.next-btn{background:rgba(10,10,30,.88);color:white;border:1px solid rgba(255,255,255,.25);padding:11px 30px;border-radius:10px;font-weight:700;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:20px;box-shadow:0 4px 18px rgba(0,0,0,.4);}
+</style>
+</head>
+<body>
+
+<div id="petals-c"></div>
+<div class="flash-overlay" id="flash"></div>
+
+<div class="page red-bg active" id="page-lock">
+  <div class="polaroid-lock">
+    <img class="lock-img" src="photo1.png">
+    <div style="text-align:center;font-family:'Dancing Script';padding-top:10px;font-size:1.5rem;">For RANI 💕</div>
+  </div>
+  <div style="margin-top:20px;text-align:center;">
+    <div style="color:white;margin-bottom:10px;letter-spacing:2px;font-size:0.8rem;">ENTER PASSCODE</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:20px;">
+      <div class="pbox" id="pb0"></div><div class="pbox" id="pb1"></div><div class="pbox" id="pb2"></div><div class="pbox" id="pb3"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <button class="kkey" onclick="press(1)">1</button><button class="kkey" onclick="press(2)">2</button><button class="kkey" onclick="press(3)">3</button>
+      <button class="kkey" onclick="press(4)">4</button><button class="kkey" onclick="press(5)">5</button><button class="kkey" onclick="press(6)">6</button>
+      <button class="kkey" onclick="press(7)">7</button><button class="kkey" onclick="press(8)">8</button><button class="kkey" onclick="press(9)">9</button>
+      <div style="width:58px"></div><button class="kkey" onclick="press(0)">0</button><button class="kkey" onclick="del()">⌫</button>
+    </div>
+  </div>
+</div>
+
+<div class="page red-bg" id="page-camera">
+  <div style="color:white;margin-bottom:20px;font-family:'Playfair Display';font-style:italic;text-align:center;font-size:1.4rem;">SMILE bandariya 🐒</div>
+  <div class="cam-scene">
+    <div class="polaroid-out" id="polaroid-out"><img src="photo2.png"><div style="font-family:'Dancing Script';text-align:center;font-size:10px;">RANI 💕</div></div>
+    <svg viewBox="0 0 320 280"><rect x="24" y="68" width="272" height="180" rx="28" fill="#28b8b0"/><circle cx="176" cy="168" r="66" fill="#111"/></svg>
+  </div>
+  <button class="next-btn" id="shoot-btn" onclick="shoot()">📸 CLICK!</button>
+  <button class="next-btn" id="cam-next" style="display:none;" onclick="goTo('page-reveal')">NEXT</button>
+</div>
+
+<div class="page red-bg" id="page-reveal">
+  <div style="color:white;font-family:'Dancing Script';font-size:2.2rem;margin-bottom:20px;text-align:center;padding:0 20px;">OMG ladki ho ya apsara 😍</div>
+  <div style="background:white;padding:10px 10px 45px;box-shadow:0 15px 45px rgba(0,0,0,0.5);transform:rotate(3deg);width:min(220px,60vw);"><img src="photo2.png" style="aspect-ratio:4/5;"></div>
+  <button class="next-btn" style="margin-top:20px;" onclick="goTo('page-hub')">SEE GIFTS →</button>
+</div>
+
+<div class="page red-bg" id="page-hub">
+  <h1 style="color:white;font-family:'Dancing Script';font-size:3rem;">Gifts for RANI</h1>
+  <div style="display:flex;gap:40px;margin-top:40px;">
+    <button onclick="goTo('page-letter')" style="background:none;border:none;font-size:60px;cursor:pointer;">💌</button>
+    <button onclick="goTo('page-gallery')" style="background:none;border:none;font-size:60px;cursor:pointer;">📸</button>
+  </div>
+</div>
+
+<div class="page" id="page-letter" style="background:#f9f0eb;">
+  <div class="letter-box">
+    <h2 style="font-family:'Dancing Script';color:#a83030;font-size:2.2rem;">Dear RANI,</h2>
+    <p style="font-family:'Cormorant Garamond';line-height:1.7;margin-top:20px;color:#5c3a30;font-size:1.15rem;">
+      You are the most special person in my life. Every day feels like a blessing with you. Thank you for being my bestfriend 💗
+    </p>
+    <div style="display:flex;gap:10px;margin-top:20px;justify-content:center;">
+        <img src="photo3.png" style="width:80px;height:80px;border-radius:4px;border:2px solid white;">
+        <img src="photo4.png" style="width:80px;height:80px;border-radius:4px;border:2px solid white;">
+    </div>
+    <p style="font-family:'Dancing Script';margin-top:25px;font-size:1.4rem;color:#a83030;text-align:right;">— Yours always 💕</p>
+  </div>
+  <button class="next-btn" onclick="goTo('page-hub')">BACK</button>
+</div>
+
+<div class="page" id="page-gallery" style="background:#0a0a18;">
+  <div class="gallery-wrap">
+    <div class="gallery-img-card" style="--r:-3deg;"><img src="photo5.png" style="aspect-ratio:1/1;"><div style="font-family:'Dancing Script';text-align:center;padding:5px;">Sweet 💙</div></div>
+    <div class="gallery-img-card" style="--r:2deg;"><img src="photo6.png" style="aspect-ratio:1/1;"><div style="font-family:'Dancing Script';text-align:center;padding:5px;">Together 💖</div></div>
+    <div class="gallery-img-card" style="--r:-2deg;"><img src="photo7.png" style="aspect-ratio:1/1;"><div style="font-family:'Dancing Script';text-align:center;padding:5px;">Always 💕</div></div>
+  </div>
+  <button class="next-btn" onclick="goTo('page-hub')">BACK</button>
+</div>
+
+<script>
+const CORRECT = '2009';
+let pin = '';
+function goTo(id) { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function press(n) {
+  if(pin.length < 4) {
+    pin += n;
+    for(let i=0; i<4; i++) document.getElementById('pb'+i).classList.toggle('filled', i < pin.length);
+    if(pin.length === 4) setTimeout(() => { if(pin === CORRECT) { goTo('page-camera'); pin=''; reset(); } else { pin = ''; reset(); alert('Wrong Passcode!'); } }, 300);
+  }
+}
+function reset() { for(let i=0; i<4; i++) document.getElementById('pb'+i).classList.remove('filled'); }
+function del() { pin = pin.slice(0, -1); for(let i=0; i<4; i++) document.getElementById('pb'+i).classList.toggle('filled', i < pin.length); }
+function shoot() {
+  document.getElementById('flash').classList.add('flash');
+  document.getElementById('polaroid-out').classList.add('shoot');
+  document.getElementById('shoot-btn').style.display = 'none';
+  setTimeout(() => { document.getElementById('cam-next').style.display = 'block'; }, 2200);
+}
+const c = document.getElementById('petals-c');
+for(let i=0; i<25; i++) {
+  const p = document.createElement('div'); p.className = 'petal'; p.innerText = '🌸';
+  p.style.left = Math.random()*100+'vw'; p.style.animationDuration = (Math.random()*5+5)+'s';
+  c.appendChild(p);
+}
+</script>
+</body>
+</html>
